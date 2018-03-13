@@ -2,17 +2,21 @@ using System;
 using System.IO.Ports;
 using WindowsInput.Native; 
 using WindowsInput;
+using System.Threading;
 
 namespace ArduinoKeyboard {
     public class ArduinoConnect {
         private SerialPort serialPort;
-
+        private const Int32 MINUTE = 1*1000*60;
         private InputSimulator inputSim;
-
+        private boolean receivedPong = false;
         private Int32[] keyArray;
         private VirtualKeyCode[] keyCodeArray;
-        public ArduinoConnect()
+        private String comPort;
+        private boolean running = true;
+        public ArduinoConnect(String comPort)
         {
+            this.comPort = comPort;
             inputSim = new InputSimulator();
             keyArray = new Int32[] {0,0,0,0,0,0,0,0,0,0,0};
             keyCodeArray = new VirtualKeyCode[] 
@@ -33,7 +37,7 @@ namespace ArduinoKeyboard {
             // Initialise the serial port on COM3.
             // obviously we would normally parameterise this, but
             // this is for demonstration purposes only.
-            this.serialPort = new SerialPort ("COM3") {
+            this.serialPort = new SerialPort (this.comPort) {
                 BaudRate = 9600,
                 Parity = Parity.None,
                 StopBits = StopBits.One,
@@ -46,6 +50,29 @@ namespace ArduinoKeyboard {
 
             // Now open the port.
             this.serialPort.Open ();
+            
+            do
+            {
+                //TODO alguma coisa para verifica se fica rodando
+                //Thread.Sleep(MINUTE);
+            }while(running);
+            this.ClosePort();
+        }
+        public void ClosePort()
+        {
+            this.serialPort.Close();
+        }
+        public void Stop()
+        {
+            if(!this.serialPort.isOpen)
+            {
+                this.ClosePort();
+            }
+            this.running = false;
+        }
+        private void sendPing()
+        {
+            //TODO enviar ping
         }
         private void pressKeys()
         {
