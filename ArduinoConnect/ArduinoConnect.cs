@@ -103,6 +103,10 @@ namespace ArduinoKeyboard {
             return true;
         }
         private void SerialPortDataReceived (object sender, SerialDataReceivedEventArgs e) {
+            if( !this.running )
+            {
+                this.ClosePort ();
+            }
             Console.WriteLine(".");
             var serialPort = (SerialPort) sender;
             // Read the data that's in the serial buffer.
