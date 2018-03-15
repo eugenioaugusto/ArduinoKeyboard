@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoConnect", "ArduinoConnect\ArduinoConnect.csproj", "{C6DEA04E-07E3-490F-94E9-197DA5CEF54C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadSerialInputFromUSB", "ReadSerialInputFromUSB\ReadSerialInputFromUSB.csproj", "{78B49974-4828-4196-8885-AF10C165C978}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

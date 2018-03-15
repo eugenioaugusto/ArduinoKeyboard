@@ -8,3 +8,13 @@ c:\Users\Meu computador\Documents\Projetos\ArduinoKeyboard\ArduinoConnect\obj\De
 c:\Users\Meu computador\Documents\Projetos\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\ArduinoConnect.AssemblyInfo.cs
 c:\Users\Meu computador\Documents\Projetos\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\ArduinoConnect.dll
 c:\Users\Meu computador\Documents\Projetos\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\ArduinoConnect.pdb
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\ArduinoConnect.deps.json
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\ArduinoConnect.runtimeconfig.json
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\ArduinoConnect.runtimeconfig.dev.json
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\ArduinoConnect.dll
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\ArduinoConnect.pdb
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\ArduinoConnect.csproj.CoreCompileInputs.cache
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\ArduinoConnect.AssemblyInfoInputs.cache
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\ArduinoConnect.AssemblyInfo.cs
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\ArduinoConnect.dll
+c:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\ArduinoConnect.pdb

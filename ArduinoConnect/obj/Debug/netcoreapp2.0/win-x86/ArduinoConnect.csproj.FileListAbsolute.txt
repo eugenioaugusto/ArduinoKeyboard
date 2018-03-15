@@ -11,3 +11,16 @@ C:\Users\Meu computador\Documents\Projetos\ArduinoKeyboard\ArduinoConnect\obj\De
 C:\Users\Meu computador\Documents\Projetos\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\win-x86\ArduinoConnect.AssemblyInfo.cs
 C:\Users\Meu computador\Documents\Projetos\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\win-x86\ArduinoConnect.dll
 C:\Users\Meu computador\Documents\Projetos\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\win-x86\ArduinoConnect.pdb
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\win-x86\hostpolicy.dll
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\win-x86\hostfxr.dll
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\win-x86\ArduinoConnect.exe
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\win-x86\ArduinoConnect.deps.json
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\win-x86\ArduinoConnect.runtimeconfig.json
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\win-x86\ArduinoConnect.runtimeconfig.dev.json
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\win-x86\ArduinoConnect.dll
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Debug\netcoreapp2.0\win-x86\ArduinoConnect.pdb
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\win-x86\ArduinoConnect.csproj.CoreCompileInputs.cache
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\win-x86\ArduinoConnect.AssemblyInfoInputs.cache
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\win-x86\ArduinoConnect.AssemblyInfo.cs
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\win-x86\ArduinoConnect.dll
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Debug\netcoreapp2.0\win-x86\ArduinoConnect.pdb

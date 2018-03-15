@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0/win-x86",
-    "signature": "e0b054bdde651debab7b00a195097e1f211a2675"
+    "signature": "c8f144e263b4f9fdccc13098a330b9d9c4ac20d8"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,12 +9,17 @@
     ".NETCoreApp,Version=v2.0/win-x86": {
       "ArduinoConnect/1.0.0": {
         "dependencies": {
+          "InputSimulator": "1.0.4",
           "Microsoft.NETCore.App": "2.0.0",
-          "System.IO.Ports": "4.4.0-preview2-25405-01",
-          "System.Management": "4.0.0"
+          "System.IO.Ports": "4.4.0-preview2-25405-01"
         },
         "runtime": {
           "ArduinoConnect.dll": {}
+        }
+      },
+      "InputSimulator/1.0.4": {
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
         }
       },
       "Microsoft.NETCore.App/2.0.0": {
@@ -298,12 +303,6 @@
           "runtimes/win/lib/netstandard2.0/System.IO.Ports.dll": {}
         }
       },
-      "System.Management/4.0.0": {
-        "runtime": {
-          "lib/System.Management.Instrumentation.dll": {},
-          "lib/System.Management.dll": {}
-        }
-      },
       "System.Security.AccessControl/4.4.0-preview2-25405-01": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
@@ -322,6 +321,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "InputSimulator/1.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-D0LvRCPQMX6/FJHBjng+RO+wRDuHTJrfo7IAc7rmkPvRqchdVGJWg3y70peOtDy3OLNK+HSOwVkH4GiuLnkKgA==",
+      "path": "inputsimulator/1.0.4",
+      "hashPath": "inputsimulator.1.0.4.nupkg.sha512"
     },
     "Microsoft.NETCore.App/2.0.0": {
       "type": "package",
@@ -406,13 +412,6 @@
       "sha512": "sha512-gDxfMo8Kg97h8AIzjez7M+u39Uf2PpWXwObRpaJWdM1DlAPdWftA8jFHvr3fhKL93fEABUXmNMjoEzkLftbf8Q==",
       "path": "system.io.ports/4.4.0-preview2-25405-01",
       "hashPath": "system.io.ports.4.4.0-preview2-25405-01.nupkg.sha512"
-    },
-    "System.Management/4.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-z9pGTmFvUzEfIgJrD2jPdJIAGh1m86jOEO2k0VlyZQU+S2qG1buwgJhuXO4gJ30uOcrnDOqkZtGhO1LNJ6xbBg==",
-      "path": "system.management/4.0.0",
-      "hashPath": "system.management.4.0.0.nupkg.sha512"
     },
     "System.Security.AccessControl/4.4.0-preview2-25405-01": {
       "type": "package",
