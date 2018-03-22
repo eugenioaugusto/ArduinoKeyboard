@@ -6,6 +6,8 @@ using System.Threading;
 namespace ArduinoKeyboard {
     class Program {
         private bool run = true;
+        private AutoResetEvent stopEvent = new AutoResetEvent(false);
+
         Dictionary<String, ArduinoConnect> mapConnects = new Dictionary<String, ArduinoConnect> ();
         static void Main (string[] args) {
             Console.WriteLine ("Serial ports available:");
@@ -14,9 +16,10 @@ namespace ArduinoKeyboard {
             Thread thread = new System.Threading.Thread (program.StartPorts);
             thread.Start ();
             Console.WriteLine ("esperando comando");
-            Console.ReadKey ();
+            Console.Read ();
             Console.WriteLine ("Recebeu comando de saida");
             program.run = false;
+            program.stopEvent.Set();
             Thread.Sleep (1000);
         }
         private void StartPorts () {
@@ -33,7 +36,7 @@ namespace ArduinoKeyboard {
                         thread.Start ();
                     }
                 }
-                Thread.Sleep (1000);
+                stopEvent.WaitOne(1000);
             } while (this.run);
             Console.WriteLine ("Programa saindo");
             foreach (ArduinoConnect connect in mapConnects.Values) {

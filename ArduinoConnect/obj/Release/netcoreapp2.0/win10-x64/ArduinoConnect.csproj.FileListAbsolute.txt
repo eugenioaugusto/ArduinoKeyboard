@@ -1,0 +1,13 @@
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Release\netcoreapp2.0\win10-x64\hostpolicy.dll
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Release\netcoreapp2.0\win10-x64\hostfxr.dll
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Release\netcoreapp2.0\win10-x64\ArduinoConnect.exe
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Release\netcoreapp2.0\win10-x64\ArduinoConnect.deps.json
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Release\netcoreapp2.0\win10-x64\ArduinoConnect.runtimeconfig.json
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Release\netcoreapp2.0\win10-x64\ArduinoConnect.runtimeconfig.dev.json
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Release\netcoreapp2.0\win10-x64\ArduinoConnect.dll
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\bin\Release\netcoreapp2.0\win10-x64\ArduinoConnect.pdb
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Release\netcoreapp2.0\win10-x64\ArduinoConnect.csproj.CoreCompileInputs.cache
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Release\netcoreapp2.0\win10-x64\ArduinoConnect.AssemblyInfoInputs.cache
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Release\netcoreapp2.0\win10-x64\ArduinoConnect.AssemblyInfo.cs
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Release\netcoreapp2.0\win10-x64\ArduinoConnect.dll
+C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoConnect\obj\Release\netcoreapp2.0\win10-x64\ArduinoConnect.pdb
