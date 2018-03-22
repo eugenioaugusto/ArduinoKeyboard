@@ -1,0 +1,2 @@
+-Biblioteca de Ini
+  https://www.nuget.org/packages/ini-parser/
