@@ -2,6 +2,6 @@ namespace ArduinoKeyboard
 {
 	public interface ArduinoKeyboardServerInterface
 	{
-		void SetComConnected(bool isConnected);
+		void SetComConnected(ArduinoConnect child, bool isConnected);
 	}
 }

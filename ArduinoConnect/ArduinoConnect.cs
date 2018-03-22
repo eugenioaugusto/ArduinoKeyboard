@@ -14,9 +14,12 @@ namespace ArduinoKeyboard {
         private String comPort;
         AutoResetEvent stopEvent;
         bool running = true;
+
+        ArduinoKeyboardServerInterface parent;
         private bool receivedData = false;
-        public ArduinoConnect (String comPort) {
+        public ArduinoConnect (ArduinoKeyboardServerInterface parent, String comPort) {
             this.comPort = comPort;
+            this.parent = parent;
             inputSim = new InputSimulator ();
             stopEvent = new AutoResetEvent(false);
             keyArray = new Int32[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -79,6 +82,7 @@ namespace ArduinoKeyboard {
             this.ClosePort ();
         }
         public void ClosePort () {
+            this.parent.SetComConnected(this, false);
             this.serialPort.Close ();
         }
         public void Stop () {
