@@ -1,2 +1,5 @@
 -Biblioteca de Ini
   https://www.nuget.org/packages/ini-parser/
+-Joystick
+  http://www.grayhill.com/assets/1/7/Opt_Encoder_60A.pdf
+  http://www.grayhill.com/assets/1/7/04JT_datasheet1.pdf
