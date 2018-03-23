@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Threading;
 
 namespace ArduinoConnect
 
@@ -20,9 +22,10 @@ namespace ArduinoConnect
 		public void LogFile()
 		{
 			string fileLogName = "";
-			StreamWriter file_log = new StreamWriter(new FileStream(default_filelog_name, System.IO.FileMode.Append));
+			StreamWriter file_log = new StreamWriter(new FileStream(fileLogName, System.IO.FileMode.Append));
 			string text_buffer;
 			TimeSpan delay_hig = new TimeSpan(0, 0, 0, 2, 0);
+			TagLogData stLogData;
 			while (!this.bStop)
 			{
 				while (queueLogFile.Count > 0)
@@ -33,26 +36,11 @@ namespace ArduinoConnect
 						continue;
 					}
 					text_buffer = String.Empty;
-					if (stLogData.Text_bInserirDataHora)
-					{
-						text_buffer = dtCurrTime.ToString("[ddMMyy HHmmss] ");
-					}
-					if (stLogData.Text_linha != 0)
-					{
+						text_buffer = stLogData.DtCurrTime.ToString("[ddMMyy HHmmss] ");
 						text_buffer += "[" + stLogData.Text_linha.ToString("0###") + "] ";
-					}
-					if (stLogData.Text_function.Length > 0)
-					{
 						text_buffer += "[" + stLogData.Text_function + "] ";
-					}
-					if (stLogData.Text_data.Length > 0)
-					{
 						text_buffer += stLogData.Text_data;
-					}
-					if (stLogData.Text_bInserirQuebraLinha)
-					{
 						text_buffer += "\r\n";
-					}
 					file_log.Write(text_buffer);
 					file_log.Flush();
 				}
