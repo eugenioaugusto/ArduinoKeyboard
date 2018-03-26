@@ -1,9 +1,0 @@
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\bin\Debug\ArduinoKeyboard.exe.config
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\bin\Debug\ArduinoKeyboard.exe
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\bin\Debug\ArduinoKeyboard.pdb
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\obj\Debug\ArduinoKeyboard.csprojResolveAssemblyReference.cache
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\obj\Debug\ArduinoKeyboard.ProjectInstaller.resources
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\obj\Debug\ArduinoKeyboard.csproj.GenerateResource.cache
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\obj\Debug\ArduinoKeyboard.csproj.CoreCompileInputs.cache
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\obj\Debug\ArduinoKeyboard.exe
-C:\Users\B40456\Documents\Visual Studio 2017\Projects\ArduinoKeyboard\ArduinoKeyboard\obj\Debug\ArduinoKeyboard.pdb

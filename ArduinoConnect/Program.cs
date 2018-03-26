@@ -29,7 +29,12 @@ namespace ArduinoKeyboard {
                 foreach (string portName in SerialPort.GetPortNames ()) {
                     if (!mapConnects.ContainsKey (portName)) {
                         Console.WriteLine (portName);
-                        arduinoConnect = new ArduinoConnect (portName);
+                        Configs config = new Configs();
+                        config.IsRepeat = new bool[] {true,true,true,true,true,true,true,true,true,true,true};
+                        config.ListRepeticoes = new Int32[] {10, 20, 25, 2};
+                        config.SleepNotExist = 30*60*1000;
+                        config.SleepTime = 1 * 1000;
+                        arduinoConnect = new ArduinoConnect (config, portName);
                         mapConnects.Add (portName, arduinoConnect);
 
                         Thread thread = new System.Threading.Thread (new ThreadStart (arduinoConnect.ReadFromPort));

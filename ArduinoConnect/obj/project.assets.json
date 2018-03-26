@@ -1731,11 +1731,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Meu computador\\Documents\\GUIT\\ArduinoKeyboard\\ArduinoConnect\\ArduinoConnect.csproj",
+      "projectUniqueName": "c:\\Users\\Meu computador\\Documents\\GUIT\\ArduinoKeyboard\\ArduinoConnect\\ArduinoConnect.csproj",
       "projectName": "ArduinoConnect",
-      "projectPath": "C:\\Users\\Meu computador\\Documents\\GUIT\\ArduinoKeyboard\\ArduinoConnect\\ArduinoConnect.csproj",
+      "projectPath": "c:\\Users\\Meu computador\\Documents\\GUIT\\ArduinoKeyboard\\ArduinoConnect\\ArduinoConnect.csproj",
       "packagesPath": "C:\\Users\\Meu computador\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Meu computador\\Documents\\GUIT\\ArduinoKeyboard\\ArduinoConnect\\obj\\",
+      "outputPath": "c:\\Users\\Meu computador\\Documents\\GUIT\\ArduinoKeyboard\\ArduinoConnect\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
