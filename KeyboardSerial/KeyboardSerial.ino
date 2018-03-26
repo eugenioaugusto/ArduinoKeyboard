@@ -20,6 +20,8 @@
 */
 
 int i = 0;
+
+bool lastIsZero = false;
 void setup() {
   // open the serial port:
   Serial.begin(9600);
@@ -38,12 +40,20 @@ void setup() {
 
 void loop() {
   String envio = "#";
+  int digiRead = 0;
+  bool isZero = false;
   for(int i=2;i<=12;i++)
   {
+    digiRead = digitalRead(i);
     envio += digitalRead(i);
+    isZero = isZero && digiRead == 0;
   }
   envio += "$";
-  Serial.println(envio);
+  if( !isZero || !lastIsZero )
+  {
+    Serial.println(envio);
+  }
+  lastIsZero = isZero;
   delay(50);
   i++;
 }
