@@ -1,0 +1,4 @@
+-Adicionar funcionalidade de ping para garantir que está conectado no dispositivo correto
+  Fazer o arduino verificar se tem dados para ler e responder com pong caso leia ping
+  Fazer o serviço enviar um ping quando conecta
+  Verificar se não fica bloqueado quando da o connection.open
