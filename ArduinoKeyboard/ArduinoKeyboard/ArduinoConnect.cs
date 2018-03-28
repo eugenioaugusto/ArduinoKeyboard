@@ -19,10 +19,10 @@ namespace ArduinoKeyboard {
         public ArduinoConnect (Configs config, String comPort) {
             this.config = config;
             this.comPort = comPort;
-            inputSim = new InputSimulator ();
-            stopEvent = new AutoResetEvent (false);
-            keyArray = new Int32[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            keyCodeArray = new VirtualKeyCode[] {
+			this.inputSim = new InputSimulator ();
+			this.stopEvent = new AutoResetEvent (false);
+			this.keyArray = new Int32[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			this.keyCodeArray = new VirtualKeyCode[] {
                 VirtualKeyCode.VK_1,
                 VirtualKeyCode.VK_2,
                 VirtualKeyCode.VK_3,
@@ -49,7 +49,7 @@ namespace ArduinoKeyboard {
             };
 
             // Subscribe to the DataReceived event.
-            this.serialPort.DataReceived += SerialPortDataReceived;
+            this.serialPort.DataReceived += this.SerialPortDataReceived;
             do {
                 bool exist = true;
                 try {
@@ -72,15 +72,15 @@ namespace ArduinoKeyboard {
                 this.Log ("Dormiu");
                 //TODO alguma coisa para verifica se fica rodando
                 if (exist) {
-                    stopEvent.WaitOne (this.config.SleepTime);
+					this.stopEvent.WaitOne (this.config.SleepTime);
                 } else {
-                    stopEvent.WaitOne (this.config.SleepNotExist);
+					this.stopEvent.WaitOne (this.config.SleepNotExist);
                 }
                 this.Log ("Acordou");
-                if (!receivedData) {
+                if (!this.receivedData) {
                     this.ClosePort ();
                 } else {
-                    receivedData = false;
+					this.receivedData = false;
                 }
                 this.Log (this.comPort + "running " + this.running.ToString ());
             } while (this.running);
@@ -93,14 +93,14 @@ namespace ArduinoKeyboard {
         public void Stop () {
             this.Log ("Recebeu comando stop");
             this.running = false;
-            stopEvent.Set ();
+			this.stopEvent.Set ();
         }
         public bool IsConnected () {
             return this.serialPort.IsOpen && this.receivedData;
         }
-        private void pressKeys () {
-            for (int i = 0; i < keyArray.Length; i++) {
-                Int32 keyvalue = keyArray[i];
+        private void PressKeys () {
+            for (int i = 0; i < this.keyArray.Length; i++) {
+                Int32 keyvalue = this.keyArray[i];
                 if (keyvalue != 0) {
                     foreach (Int32 repeatValue in this.config.ListRepeticoes) {
                         if( keyvalue < repeatValue )
@@ -109,24 +109,26 @@ namespace ArduinoKeyboard {
                         }
                         if (keyvalue == repeatValue ||
                             keyvalue % repeatValue == 0)
-                            inputSim.Keyboard.KeyPress (keyCodeArray[i]);
+						{
+							this.inputSim.Keyboard.KeyPress (this.keyCodeArray[i]);
+						}
                     }
                 }
             }
         }
-        private bool readButtons (String data) {
+        private bool ReadButtons (String data) {
             this.Log (data);
             if (data[0] != '#') {
                 return false;
             }
-            if (data.Length < keyArray.Length) {
+            if (data.Length < this.keyArray.Length) {
                 return false;
             }
             for (int i = 1; i < data.Length; i++) {
                 if (data[i] == '0') {
-                    keyArray[i - 1] = 0;
+					this.keyArray[i - 1] = 0;
                 } else if (data[i] == '1') {
-                    keyArray[i - 1]++;
+					this.keyArray[i - 1]++;
                 } else if (data[i] == '$') {
                     return true;
                 } else {
@@ -141,9 +143,9 @@ namespace ArduinoKeyboard {
             var serialPort = (SerialPort) sender;
             // Read the data that's in the serial buffer.
             String serialdata = serialPort.ReadExisting ().ToString ();
-            this.receivedData = readButtons (serialdata);
+            this.receivedData = ReadButtons (serialdata);
             if (this.receivedData) {
-                this.pressKeys ();
+                this.PressKeys ();
             }
             if (!this.running) {
                 this.ClosePort ();
