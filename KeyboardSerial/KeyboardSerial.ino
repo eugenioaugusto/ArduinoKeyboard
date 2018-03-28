@@ -25,35 +25,47 @@ bool lastIsZero = false;
 void setup() {
   // open the serial port:
   Serial.begin(9600);
-  pinMode(2, INPUT);
-  pinMode(3, INPUT);
-  pinMode(4, INPUT);
-  pinMode(5, INPUT);
-  pinMode(6, INPUT);
-  pinMode(7, INPUT);
-  pinMode(8, INPUT);
-  pinMode(9, INPUT);
-  pinMode(10, INPUT);
-  pinMode(11, INPUT);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
+  pinMode(4, INPUT_PULLUP);
+  pinMode(5, INPUT_PULLUP);
+  pinMode(6, INPUT_PULLUP);
+  pinMode(7, INPUT_PULLUP);
+  pinMode(8, INPUT_PULLUP);
+  pinMode(9, INPUT_PULLUP);
+  pinMode(10, INPUT_PULLUP);
+  pinMode(11, INPUT_PULLUP);
   pinMode(12, INPUT);
 }
 
 void loop() {
   String envio = "#";
   int digiRead = 0;
-  bool isZero = false;
-  for(int i=2;i<=12;i++)
+  bool isZero = true;
+  for(int i=2;i<=11;i++)
   {
-    digiRead = digitalRead(i);
-    envio += digitalRead(i);
+    digiRead = 1 - digitalRead(i);
+    envio += digiRead;
     isZero = isZero && digiRead == 0;
   }
+  digiRead = digitalRead(12);
+  envio += digiRead;
+  isZero = isZero && digiRead == 0;
   envio += "$";
   if( !isZero || !lastIsZero )
   {
     Serial.println(envio);
   }
   lastIsZero = isZero;
+  String read = "";
+  while( Serial.available() )
+  {
+    read += Serial.readString();
+  }
+  if(read.indexOf("ping") >= 0)
+  {
+    Serial.println("pong");
+  }
   delay(50);
   i++;
 }
