@@ -7,10 +7,15 @@ namespace ArduinoKeyboard
         private bool[] isRepeat;
         private Int32 sleepTime;
         private Int32 sleepNotExist;
+		private bool logInfo;
+		private bool logDataReceived;
 
-        public int[] ListRepeticoes { get => listRepeticoes; set => listRepeticoes = value; }
-        public bool[] IsRepeat { get => isRepeat; set => isRepeat = value; }
-        public int SleepTime { get => sleepTime; set => sleepTime = value; }
-        public int SleepNotExist { get => sleepNotExist; set => sleepNotExist = value; }
-    }
+
+		public int[] ListRepeticoes { get => this.listRepeticoes; set => this.listRepeticoes = value; }
+        public bool[] IsRepeat { get => this.isRepeat; set => this.isRepeat = value; }
+        public int SleepTime { get => this.sleepTime; set => this.sleepTime = value; }
+        public int SleepNotExist { get => this.sleepNotExist; set => this.sleepNotExist = value; }
+		public bool LogInfo { get => this.logInfo; set => this.logInfo = value; }
+		public bool LogDataReceived { get => this.logDataReceived; set => this.logDataReceived = value; }
+	}
 }

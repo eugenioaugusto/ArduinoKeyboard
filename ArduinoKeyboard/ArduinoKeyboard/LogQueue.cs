@@ -28,6 +28,10 @@ namespace ArduinoKeyboard
 		/// </summary>
 		public void LogFile()
 		{
+			if (!File.Exists(this.filename))
+			{
+				File.Create(this.filename);
+			}
 			StreamWriter file_log = new StreamWriter(new FileStream(this.filename, System.IO.FileMode.Append));
 			string text_buffer;
 			TimeSpan delay_hig = new TimeSpan(0, 0, 0, 2, 0);
@@ -42,14 +46,14 @@ namespace ArduinoKeyboard
 						continue;
 					}
 					text_buffer = String.Empty;
-						text_buffer = stLogData.DtCurrTime.ToString("[ddMMyy HHmmss] ");
-						text_buffer += "[" + stLogData.Text_linha.ToString("0###") + "] ";
-						text_buffer += "[" + stLogData.Text_function + "] ";
-						text_buffer += stLogData.Text_data;
-						text_buffer += "\r\n";
+					text_buffer = stLogData.DtCurrTime.ToString("[ddMMyy HHmmss] ");
+					text_buffer += stLogData.Text_data;
+					text_buffer += "\r\n";
 					file_log.Write(text_buffer);
 					file_log.Flush();
 				}
+				//TODO criar evento na classe pai statico para quando deve sair
+
 				if (ArduinoKeyboardService.G_ShutdownEvent.WaitOne(delay_hig, true))
 				{
 					this.bStop = true;
@@ -59,6 +63,7 @@ namespace ArduinoKeyboard
 		public void Stop()
 		{
 			this.bStop = true;
+
 		}
 	}
 }

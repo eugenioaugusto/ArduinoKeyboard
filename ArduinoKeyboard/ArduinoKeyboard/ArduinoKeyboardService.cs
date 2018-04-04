@@ -16,11 +16,12 @@ namespace ArduinoKeyboard
 	public partial class ArduinoKeyboardService : ServiceBase
 	{
 		private const string LOG_FILE_NAME = @"c:\arduino keyboard\log\log.txt";
+		private const string LOG_CRITICAL_FILE_NAME = @"c:\arduino keyboard\log\logCritical.txt";
 		private LogQueue logQueue;
 		private bool stop = false;
 		private static ManualResetEvent g_ShutdownEvent;
 		private static string g_strIniFileName = "config.ini";
-		private Dictionary<String, ArduinoConnect> mapConnects = new Dictionary<String, ArduinoConnect>();
+		private static Dictionary<String, ArduinoConnect> mapConnects = new Dictionary<String, ArduinoConnect>();
 		private static Configs config;
 
 		public static ManualResetEvent G_ShutdownEvent { get => g_ShutdownEvent; set => g_ShutdownEvent = value; }
@@ -33,8 +34,6 @@ namespace ArduinoKeyboard
 		protected override void OnStart(string[] args)
 		{
 			this.ServiceInit();
-			G_ShutdownEvent = new ManualResetEvent(false);
-			config = new Configs();
 		}
 
 		protected override void OnStop()
@@ -43,11 +42,19 @@ namespace ArduinoKeyboard
 			g_ShutdownEvent.Set();
 			Thread.Sleep(1000);
 		}
+		public static void Log(String comInfo, String text)
+		{
+			TagLogData data = new TagLogData();
+			data.Text_data = String.Format("ComPort {0}: {1}", comInfo, text);
+			data.DtCurrTime = DateTime.Now;
+			LogQueue.QueueLogFile.Enqueue(data);
+		}
 		/// <summary>
 		/// Método que inicializa as threads de leitura
 		/// </summary>
 		public void ServiceInit()
 		{
+			G_ShutdownEvent = new ManualResetEvent(false);
 			//inicializa Thread de log
 			this.logQueue = new LogQueue(LOG_FILE_NAME);
 			Thread t = new Thread(this.logQueue.LogFile);
@@ -55,6 +62,7 @@ namespace ArduinoKeyboard
 
 
 			string msg = "Comando Start recebido.";
+			Log("Main", msg);
 #if !DEBUG
             eventLog.WriteEntry(msg);
 #endif
@@ -73,7 +81,7 @@ namespace ArduinoKeyboard
 #if !DEBUG
 					eventLog.WriteEntry(msg);
 #endif
-					StreamWriter file_log = new StreamWriter(new FileStream(LOG_FILE_NAME, System.IO.FileMode.Append));
+					StreamWriter file_log = new StreamWriter(new FileStream(LOG_CRITICAL_FILE_NAME, System.IO.FileMode.Append));
 					file_log.WriteLine(msg);
 					file_log.Close();
 					base.Stop();
@@ -86,7 +94,11 @@ namespace ArduinoKeyboard
 #if !DEBUG
 				eventLog.WriteEntry(msg);
 #endif
-				StreamWriter file_log = new StreamWriter(new FileStream(LOG_FILE_NAME, System.IO.FileMode.Append));
+				if(!File.Exists(LOG_CRITICAL_FILE_NAME))
+				{
+					File.Create(LOG_CRITICAL_FILE_NAME);
+				}
+				StreamWriter file_log = new StreamWriter(new FileStream(LOG_CRITICAL_FILE_NAME, System.IO.FileMode.Append));
 				file_log.WriteLine("[Exception][le_configuracao()]Exceção ocorrida durante tentativa leitura de arquivo de configuração, causa : " + ex.ToString() + " - " + ex.StackTrace);
 				file_log.Close();
 				base.Stop();
@@ -121,12 +133,22 @@ namespace ArduinoKeyboard
 		}
 		private static bool LeConfiguracao()
 		{
+			if( config == null )
+			{
+				config = new Configs();
+			}
 			//TODO criar arquivo se não existir
 			config.IsRepeat = new bool[] { true, true, true, true, true, true, true, true, true, true, true };
 			config.ListRepeticoes = new Int32[] { 10, 20, 25, 2 };
 			config.SleepNotExist = 30 * 60 * 1000;
 			config.SleepTime = 1 * 1000;
+			config.LogDataReceived = true;
+			config.LogInfo = true;
 			return true;
+		}
+		public static void RemoveCom(ArduinoConnect connect)
+		{
+			mapConnects.Remove(connect.ComPort);
 		}
 		/// <summary>
 		/// Método que monitora as portas e inicializa as conexões
@@ -138,33 +160,38 @@ namespace ArduinoKeyboard
 				ArduinoConnect arduinoConnect;
 				bool hasConnected = false;
 
-				foreach( ArduinoConnect connect in this.mapConnects.Values )
+				List<String> portNames = SerialPort.GetPortNames().ToList<String>();
+				foreach(String key in mapConnects.Keys )
 				{
-					if( connect.IsConnected() )
+					if( !portNames.Contains(key) )
+					{
+						mapConnects[key].Stop();
+						mapConnects.Remove(key);
+					}
+					else if(mapConnects[key].IsConnected() )
 					{
 						hasConnected = true;
-						break;
 					}
 				}
 				//só verifica se não houver conexão já ativa
 				if (!hasConnected)
 				{
-					foreach (string portName in SerialPort.GetPortNames())
+					foreach (string portName in portNames)
 					{
-						if (!this.mapConnects.ContainsKey(portName))
+						if (!mapConnects.ContainsKey(portName))
 						{
 							Console.WriteLine(portName);
 							
 							
 							arduinoConnect = new ArduinoConnect(config, portName);
-							this.mapConnects.Add(portName, arduinoConnect);
+							mapConnects.Add(portName, arduinoConnect);
 
 							Thread thread = new System.Threading.Thread(new ThreadStart(arduinoConnect.ReadFromPort));
 							thread.Start();
 						}
 					}
 				}
-				if (ArduinoKeyboardService.G_ShutdownEvent.WaitOne(config.SleepTime* 1000))
+				if (ArduinoKeyboardService.G_ShutdownEvent.WaitOne(config.SleepTime))
 				{
 					this.stop = true;
 				}
