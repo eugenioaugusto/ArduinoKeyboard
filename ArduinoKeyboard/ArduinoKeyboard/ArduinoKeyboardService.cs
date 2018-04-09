@@ -10,6 +10,8 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using IniParser;
+using IniParser.Model;
 
 namespace ArduinoKeyboard
 {
@@ -17,6 +19,7 @@ namespace ArduinoKeyboard
 	{
 		private const string LOG_FILE_NAME = @"c:\arduino keyboard\log\log.txt";
 		private const string LOG_CRITICAL_FILE_NAME = @"c:\arduino keyboard\log\logCritical.txt";
+		private const string CNTL_PATH = @"c:\arduino keyboard\cntl\";
 		private LogQueue logQueue;
 		private bool stop = false;
 		private static ManualResetEvent g_ShutdownEvent;
@@ -67,7 +70,7 @@ namespace ArduinoKeyboard
             eventLog.WriteEntry(msg);
 #endif
 			FileSystemWatcher watch = new FileSystemWatcher();
-			watch.Path = @"c:\arduino keyboard\cntl\";
+			watch.Path = CNTL_PATH;
 			watch.NotifyFilter = NotifyFilters.LastWrite;
 			// Only watch ini files.
 			watch.Filter = " *.ini";
@@ -94,7 +97,7 @@ namespace ArduinoKeyboard
 #if !DEBUG
 				eventLog.WriteEntry(msg);
 #endif
-				if(!File.Exists(LOG_CRITICAL_FILE_NAME))
+				if (!File.Exists(LOG_CRITICAL_FILE_NAME))
 				{
 					File.Create(LOG_CRITICAL_FILE_NAME);
 				}
@@ -133,18 +136,41 @@ namespace ArduinoKeyboard
 		}
 		private static bool LeConfiguracao()
 		{
-			if( config == null )
+			if (config == null)
 			{
 				config = new Configs();
 			}
+			if( !File.Exists(CNTL_PATH + g_strIniFileName))
+			{
+				
+			}
+			//segue lendo mesmo tendo criado agora
+			FileIniDataParser parser = new FileIniDataParser();
+			IniData data = parser.ReadFile(CNTL_PATH + g_strIniFileName);
 			//TODO criar arquivo se não existir
-			config.IsRepeat = new bool[] { true, true, true, true, true, true, true, true, true, true, true };
-			config.ListRepeticoes = new Int32[] { 10, 20, 25, 2 };
+			//String leitura = data["GeneralConfiguration"]["setUpdate"];
+			leitura = data["SERVICO"]["SLEEP_NOT_EXIST"];
 			config.SleepNotExist = 30 * 60 * 1000;
+			leitura = data["SERVICO"]["SLEEP"];
 			config.SleepTime = 1 * 1000;
-			config.LogDataReceived = true;
+			leitura = data["SERVICO"]["NIVEL_LOG"];
 			config.LogInfo = true;
+			leitura = data["SERVICO"]["LOG_DATA"];
+			config.LogDataReceived = true;
+			leitura = data["BOTOES"]["BOTAO_REPETE"];
+			config.IsRepeat = new bool[] { true, true, true, true, true, true, true, true, true, true, true };
+			leitura = data["BOTOES"]["TEMPOS_REPETICAO"];
+			config.ListRepeticoes = new Int32[] { 10, 20, 25, 2 };
+
+			//Save the file
+			parser.WriteFile(CNTL_PATH + g_strIniFileName, data);
 			return true;
+		}
+		private static void CreateConfigFile()
+		{
+			File.Create(CNTL_PATH + g_strIniFileName);
+			//data.Sections.AddSection("newSection");
+			//data["newSection"].AddKey("newKey1", "value1");
 		}
 		public static void RemoveCom(ArduinoConnect connect)
 		{
@@ -164,14 +190,14 @@ namespace ArduinoKeyboard
 				List<String> portNames = SerialPort.GetPortNames().ToList<String>();
 				keys = mapConnects.Keys.ToList();
 				//usa assim para poder remover
-				foreach(String key in keys)
+				foreach (String key in keys)
 				{
-					if( !portNames.Contains(key) )
+					if (!portNames.Contains(key))
 					{
 						mapConnects[key].Stop();
-                        			mapConnects.Remove(key);
+						mapConnects.Remove(key);
 					}
-					else if(mapConnects[key].IsConnected() )
+					else if (mapConnects[key].IsConnected())
 					{
 						hasConnected = true;
 					}
@@ -184,8 +210,8 @@ namespace ArduinoKeyboard
 						if (!mapConnects.ContainsKey(portName))
 						{
 							Console.WriteLine(portName);
-							
-							
+
+
 							arduinoConnect = new ArduinoConnect(config, portName);
 							mapConnects.Add(portName, arduinoConnect);
 
