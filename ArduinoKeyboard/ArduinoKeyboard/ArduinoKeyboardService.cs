@@ -162,7 +162,7 @@ namespace ArduinoKeyboard
 				bool hasConnected = false;
 
 				List<String> portNames = SerialPort.GetPortNames().ToList<String>();
-				keys = mapConnects.Keys;
+				keys = mapConnects.Keys.ToList();
 				//usa assim para poder remover
 				foreach(String key in keys)
 				{
