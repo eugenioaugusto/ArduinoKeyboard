@@ -155,19 +155,21 @@ namespace ArduinoKeyboard
 		/// </summary>
 		public void Run()
 		{
+			List<String> keys;
 			while (!this.stop)
 			{
 				ArduinoConnect arduinoConnect;
 				bool hasConnected = false;
 
 				List<String> portNames = SerialPort.GetPortNames().ToList<String>();
-				foreach(String key in mapConnects.Keys )
+				keys = mapConnects.Keys;
+				//usa assim para poder remover
+				foreach(String key in keys)
 				{
 					if( !portNames.Contains(key) )
 					{
 						mapConnects[key].Stop();
-                        //TODO colocar remove fora do foreach
-						mapConnects.Remove(key);
+                        			mapConnects.Remove(key);
 					}
 					else if(mapConnects[key].IsConnected() )
 					{
