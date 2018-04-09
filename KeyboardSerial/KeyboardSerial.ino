@@ -25,7 +25,7 @@ bool lastIsZero = false;
 void setup() {
   // open the serial port:
   Serial.begin(9600);
-  pinMode(2, INPUT_PULLUP);
+  pinMode(2, INPUT);
   pinMode(3, INPUT_PULLUP);
   pinMode(4, INPUT_PULLUP);
   pinMode(5, INPUT_PULLUP);
@@ -35,20 +35,20 @@ void setup() {
   pinMode(9, INPUT_PULLUP);
   pinMode(10, INPUT_PULLUP);
   pinMode(11, INPUT_PULLUP);
-  pinMode(12, INPUT);
+  pinMode(12, INPUT_PULLUP);
 }
 
 void loop() {
   String envio = "#";
   int digiRead = 0;
   bool isZero = true;
-  for(int i=2;i<=11;i++)
+  for(int i=3;i<=12;i++)
   {
     digiRead = 1 - digitalRead(i);
     envio += digiRead;
     isZero = isZero && digiRead == 0;
   }
-  digiRead = digitalRead(12);
+  digiRead = digitalRead(2);
   envio += digiRead;
   isZero = isZero && digiRead == 0;
   envio += "$";

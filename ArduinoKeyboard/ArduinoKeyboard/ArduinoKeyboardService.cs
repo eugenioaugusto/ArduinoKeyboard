@@ -166,6 +166,7 @@ namespace ArduinoKeyboard
 					if( !portNames.Contains(key) )
 					{
 						mapConnects[key].Stop();
+                        //TODO colocar remove fora do foreach
 						mapConnects.Remove(key);
 					}
 					else if(mapConnects[key].IsConnected() )

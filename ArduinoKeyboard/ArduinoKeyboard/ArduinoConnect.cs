@@ -18,6 +18,7 @@ namespace ArduinoKeyboard
 		bool running = true;
 		private bool receivedData = false;
 		private bool receivedPong = true;
+        private int retry = 0;
 		private Configs config;
 
 		public string ComPort { get => this.comPort; set => this.comPort = value; }
@@ -106,8 +107,25 @@ namespace ArduinoKeyboard
 					this.LogInfo("Acordou");
 					if ( !this.receivedPong )
 					{
-						this.LogSevere(String.Format("Não recebeu Pong depois de {0}s. Saindo pois não é a porta correta", sleepTime / 1000));
-						this.running = false;
+                        if (this.receivedData)
+                        {
+                            this.LogSevere("Não recebeu pong mas recebeu dados corretos.");
+                        }
+                        else
+                        {
+                            this.LogSevere(String.Format("Não recebeu Pong depois de {0}s.", sleepTime / 1000));
+                            if (this.retry < 3)
+                            {
+                                this.retry++;
+                                this.serialPort.WriteLine("ping");
+                                this.LogInfo(String.Format("Ping enviado [{0}]", this.retry));
+                            }
+                            else
+                            {
+                                this.LogSevere("Saindo pois não é a porta correta");
+                                this.running = false;
+                            }
+                        }
 					}
 				}
 			} while (this.running);
