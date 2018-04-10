@@ -8,3 +8,7 @@ Multifunção
   https://br.mouser.com/Search/Refine.aspx?FS=TRUE&N=254123+4292906361
   4 direções  + encoder
   https://br.mouser.com/ProductDetail/?qs=6EGMNY9ZYDTsBzSTrhiL0w%3d%3d
+  
+resolver problema do botão como serviço
+
+https://social.msdn.microsoft.com/Forums/windowsdesktop/en-US/674b4951-1c6e-400a-838e-dc72c672a12c/uac-automation-success?forum=windowssecurity
