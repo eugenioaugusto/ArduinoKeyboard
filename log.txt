@@ -1,0 +1,120 @@
+[090418 214301] ComPort Main: Comando Start recebido.
+[090418 214301] ComPort Main: Vai criar conexão para a porta COM1
+[090418 214301] Exceção ao ler arquivo de configuração : Could not parse file c:\arduino keyboard\cntl\config.ini while parsing line number 0 with value '' - IniParser version: 2.5.2.0 -    em IniParser.FileIniDataParser.ReadFile(String filePath, Encoding fileEncoding)
+   em ArduinoKeyboard.ArduinoKeyboardService.LeConfiguracao() na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 145
+   em ArduinoKeyboard.ArduinoKeyboardService.OnIniChanged(Object source, FileSystemEventArgs e) na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 121
+[090418 214301] ComPort Main: Vai criar conexão para a porta COM3
+[090418 214301] ComPort COM1: A porta 'COM1' não existe.
+[090418 214301] ComPort COM1: Vai dormir até receber comando de parada
+[090418 214301] ComPort COM3: Abriu a porta 
+[090418 214301] ComPort COM3: Vai enviar Ping
+[090418 214301] ComPort COM3: Ping enviado
+[090418 214301] ComPort COM3: Vai dormir por 3 segundos
+[090418 214304] ComPort COM3: Acordou
+[090418 214304] ComPort COM3: Vai dormir até receber comando de parada
+[090418 214309] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 214310] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 214459] ComPort Main: Comando Start recebido.
+[090418 214459] ComPort Main: Vai criar conexão para a porta COM1
+[090418 214459] Exceção ao ler arquivo de configuração : Could not parse file c:\arduino keyboard\cntl\config.ini while parsing line number 0 with value '' - IniParser version: 2.5.2.0 -    em IniParser.FileIniDataParser.ReadFile(String filePath, Encoding fileEncoding)
+   em ArduinoKeyboard.ArduinoKeyboardService.LeConfiguracao() na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 145
+   em ArduinoKeyboard.ArduinoKeyboardService.OnIniChanged(Object source, FileSystemEventArgs e) na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 121
+[090418 214459] ComPort Main: Vai criar conexão para a porta COM3
+[090418 214459] ComPort COM1: A porta 'COM1' não existe.
+[090418 214459] ComPort COM1: Vai dormir até receber comando de parada
+[090418 214459] ComPort COM3: Abriu a porta 
+[090418 214459] ComPort COM3: Vai enviar Ping
+[090418 214459] ComPort COM3: Ping enviado
+[090418 214459] ComPort COM3: Vai dormir por 3 segundos
+[090418 214502] ComPort COM3: Acordou
+[090418 214502] ComPort COM3: Vai dormir até receber comando de parada
+[090418 214508] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 214605] ComPort Main: Comando Start recebido.
+[090418 214605] ComPort Main: Vai criar conexão para a porta COM1
+[090418 214605] Exceção ao ler arquivo de configuração : Could not parse file c:\arduino keyboard\cntl\config.ini while parsing line number 0 with value '' - IniParser version: 2.5.2.0 -    em IniParser.FileIniDataParser.ReadFile(String filePath, Encoding fileEncoding)
+   em ArduinoKeyboard.ArduinoKeyboardService.LeConfiguracao() na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 145
+   em ArduinoKeyboard.ArduinoKeyboardService.OnIniChanged(Object source, FileSystemEventArgs e) na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 121
+[090418 214605] ComPort Main: Vai criar conexão para a porta COM3
+[090418 214605] ComPort COM1: A porta 'COM1' não existe.
+[090418 214605] ComPort COM1: Vai dormir até receber comando de parada
+[090418 214605] ComPort COM3: Abriu a porta 
+[090418 214605] ComPort COM3: Vai enviar Ping
+[090418 214605] ComPort COM3: Ping enviado
+[090418 214605] ComPort COM3: Vai dormir por 3 segundos
+[090418 214608] ComPort COM3: Acordou
+[090418 214608] ComPort COM3: Vai dormir até receber comando de parada
+[090418 214612] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 215118] ComPort Main: Comando Start recebido.
+[090418 215118] ComPort Main: Vai criar conexão para a porta COM1
+[090418 215118] ComPort Main: Vai criar conexão para a porta COM3
+[090418 215118] Exceção ao ler arquivo de configuração : Could not parse file C:\Program Files (x86)\arduino keyboard\cntl\config.ini while parsing line number 0 with value '' - IniParser version: 2.5.2.0 -    em IniParser.FileIniDataParser.ReadFile(String filePath, Encoding fileEncoding)
+   em ArduinoKeyboard.ArduinoKeyboardService.LeConfiguracao() na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 145
+   em ArduinoKeyboard.ArduinoKeyboardService.OnIniChanged(Object source, FileSystemEventArgs e) na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 121
+[090418 215118] ComPort COM3: Abriu a porta 
+[090418 215118] ComPort COM3: Vai enviar Ping
+[090418 215118] ComPort COM3: Ping enviado
+[090418 215118] ComPort COM1: A porta 'COM1' não existe.
+[090418 215118] ComPort COM3: Vai dormir por 3 segundos
+[090418 215118] ComPort COM1: Vai dormir até receber comando de parada
+[090418 215121] ComPort COM3: Acordou
+[090418 215121] ComPort COM3: Vai dormir até receber comando de parada
+[090418 215134] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 215137] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 215137] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 215138] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 215209] ComPort Main: Comando Start recebido.
+[090418 215209] ComPort Main: Vai criar conexão para a porta COM1
+[090418 215209] Exceção ao ler arquivo de configuração : Could not parse file C:\Program Files (x86)\arduino keyboard\cntl\config.ini while parsing line number 0 with value '' - IniParser version: 2.5.2.0 -    em IniParser.FileIniDataParser.ReadFile(String filePath, Encoding fileEncoding)
+   em ArduinoKeyboard.ArduinoKeyboardService.LeConfiguracao() na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 145
+   em ArduinoKeyboard.ArduinoKeyboardService.OnIniChanged(Object source, FileSystemEventArgs e) na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 121
+[090418 215209] ComPort Main: Vai criar conexão para a porta COM3
+[090418 215209] ComPort COM1: A porta 'COM1' não existe.
+[090418 215209] ComPort COM1: Vai dormir até receber comando de parada
+[090418 215209] ComPort COM3: O acesso à porta 'COM3' foi negado.
+[090418 215209] ComPort COM3: Vai dormir até receber comando de parada
+[090418 215322] ComPort Main: Porta COM3 Desconectada
+[090418 215322] ComPort COM3: Recebeu comando stop
+[090418 215322] ComPort COM3: Saindo
+[090418 215332] ComPort Main: Vai criar conexão para a porta COM3
+[090418 215336] ComPort COM3: Abriu a porta 
+[090418 215336] ComPort COM3: Vai enviar Ping
+[090418 215336] ComPort COM3: Ping enviado
+[090418 215336] ComPort COM3: Vai dormir por 3 segundos
+[090418 215339] ComPort COM3: Acordou
+[090418 215339] ComPort COM3: Não recebeu pong mas recebeu dados corretos.
+[090418 215339] ComPort COM3: Vai dormir até receber comando de parada
+[090418 215341] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 215341] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 215341] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 220934] ComPort Main: Comando Start recebido.
+[090418 220934] ComPort Main: Vai criar conexão para a porta COM1
+[090418 220934] Exceção ao ler arquivo de configuração : Could not parse file C:\Program Files (x86)\arduino keyboard\cntl\config.ini while parsing line number 0 with value '' - IniParser version: 2.5.2.0 -    em IniParser.FileIniDataParser.ReadFile(String filePath, Encoding fileEncoding)
+   em ArduinoKeyboard.ArduinoKeyboardService.LeConfiguracao() na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 145
+   em ArduinoKeyboard.ArduinoKeyboardService.OnIniChanged(Object source, FileSystemEventArgs e) na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 121
+[090418 220934] ComPort Main: Vai criar conexão para a porta COM3
+[090418 220934] ComPort COM3: Abriu a porta 
+[090418 220934] ComPort COM3: Vai enviar Ping
+[090418 220934] ComPort COM3: Ping enviado
+[090418 220934] ComPort COM3: Vai dormir por 3 segundos
+[090418 220934] ComPort COM1: A porta 'COM1' não existe.
+[090418 220934] ComPort COM1: Vai dormir até receber comando de parada
+[090418 220937] ComPort COM3: Acordou
+[090418 220937] ComPort COM3: Vai dormir até receber comando de parada
+[090418 221032] ComPort Main: Comando Start recebido.
+[090418 221032] ComPort Main: Vai criar conexão para a porta COM1
+[090418 221032] Exceção ao ler arquivo de configuração : Could not parse file C:\Program Files (x86)\arduino keyboard\cntl\config.ini while parsing line number 0 with value '' - IniParser version: 2.5.2.0 -    em IniParser.FileIniDataParser.ReadFile(String filePath, Encoding fileEncoding)
+   em ArduinoKeyboard.ArduinoKeyboardService.LeConfiguracao() na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 145
+   em ArduinoKeyboard.ArduinoKeyboardService.OnIniChanged(Object source, FileSystemEventArgs e) na C:\Users\Meu computador\Documents\GUIT\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboard\ArduinoKeyboardService.cs:linha 121
+[090418 221032] ComPort Main: Vai criar conexão para a porta COM3
+[090418 221032] ComPort COM1: A porta 'COM1' não existe.
+[090418 221032] ComPort COM1: Vai dormir até receber comando de parada
+[090418 221032] ComPort COM3: Abriu a porta 
+[090418 221032] ComPort COM3: Vai enviar Ping
+[090418 221032] ComPort COM3: Ping enviado
+[090418 221032] ComPort COM3: Vai dormir por 3 segundos
+[090418 221035] ComPort COM3: Acordou
+[090418 221035] ComPort COM3: Vai dormir até receber comando de parada
+[090418 221041] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 221042] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 221042] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
+[090418 221042] ComPort COM3: Some simulated input commands were not sent successfully. The most common reason for this happening are the security features of Windows including User Interface Privacy Isolation (UIPI). Your application can only send commands to applications of the same or lower elevation. Similarly certain commands are restricted to Accessibility/UIAutomation applications. Refer to the project home page and the code samples for more information.
