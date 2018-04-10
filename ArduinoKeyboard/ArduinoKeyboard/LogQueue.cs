@@ -30,7 +30,7 @@ namespace ArduinoKeyboard
 		{
 			if (!File.Exists(this.filename))
 			{
-				File.Create(this.filename);
+				File.Create(this.filename).Close();
 			}
 			StreamWriter file_log = new StreamWriter(new FileStream(this.filename, System.IO.FileMode.Append));
 			string text_buffer;
@@ -52,8 +52,7 @@ namespace ArduinoKeyboard
 					file_log.Write(text_buffer);
 					file_log.Flush();
 				}
-				//TODO criar evento na classe pai statico para quando deve sair
-
+				
 				if (ArduinoKeyboardService.G_ShutdownEvent.WaitOne(delay_hig, true))
 				{
 					this.bStop = true;

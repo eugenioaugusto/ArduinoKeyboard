@@ -209,23 +209,29 @@ namespace ArduinoKeyboard
 		}
 		private void SerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
 		{
-			var serialPort = (SerialPort)sender;
-			// Read the data that's in the serial buffer.
-			String serialdata = serialPort.ReadExisting().ToString();
-			this.LogDataReceived(String.Format("Recebeu [{0}]", serialdata) );
-			if (serialdata.Contains("pong"))
-			{
-				this.receivedData = true;
-				this.receivedPong = true;
-			}
-			else
-			{
-				this.receivedData = ReadButtons(serialdata);
-				if (this.receivedData)
-				{
-					this.PressKeys();
-				}
-			}
+            try
+            {
+                var serialPort = (SerialPort)sender;
+                // Read the data that's in the serial buffer.
+                String serialdata = serialPort.ReadExisting().ToString();
+                this.LogDataReceived(String.Format("Recebeu [{0}]", serialdata));
+                if (serialdata.Contains("pong"))
+                {
+                    this.receivedData = true;
+                    this.receivedPong = true;
+                }
+                else
+                {
+                    this.receivedData = ReadButtons(serialdata);
+                    if (this.receivedData)
+                    {
+                        this.PressKeys();
+                    }
+                }
+            }catch(Exception ex )
+            {
+                LogSevere(ex.Message);
+            }
 		}
 
 		private void LogInfo(String log)
