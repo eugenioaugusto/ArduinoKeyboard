@@ -12,3 +12,7 @@ Multifunção
 resolver problema do botão como serviço
 
 https://social.msdn.microsoft.com/Forums/windowsdesktop/en-US/674b4951-1c6e-400a-838e-dc72c672a12c/uac-automation-success?forum=windowssecurity
+
+https://www.isumsoft.com/it/5-ways-to-open-local-security-policy-in-windows-10/
+abrir politicas de segurança pelo secpol.msc
+
