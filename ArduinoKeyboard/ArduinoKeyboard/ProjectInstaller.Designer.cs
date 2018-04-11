@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
-            this.serviceProcessInstaller1.Account = System.ServiceProcess.ServiceAccount.LocalService;
+            this.serviceProcessInstaller1.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
 			this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
 			// 
 			// serviceProcessInstaller1
