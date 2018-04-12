@@ -17,14 +17,15 @@ namespace ArduinoKeyboard
 {
 	public partial class ArduinoKeyboardService : ServiceBase
 	{
-		private const string LOG_FILE_NAME = @"C:\Program Files (x86)\arduino keyboard\log\log.txt";
-		private const string LOG_CRITICAL_FILE_NAME = @"C:\Program Files (x86)\arduino keyboard\log\logCritical.txt";
-		private const string CNTL_PATH = @"C:\Program Files (x86)\arduino keyboard\cntl\";
+        private const string DEFAULT_PATH = @"C:\Program Files (x86)\arduino keyboard\";
+        private const string LOG_FILE_NAME = DEFAULT_PATH + @"log\log.txt";
+		private const string LOG_CRITICAL_FILE_NAME = DEFAULT_PATH + @"log\logCritical.txt";
+		private const string CNTL_PATH = DEFAULT_PATH + @"cntl\";
 		private LogQueue logQueue;
 		private bool stop = false;
 		private static ManualResetEvent g_ShutdownEvent;
 		private static string g_strIniFileName = "config.ini";
-		private static Dictionary<String, ArduinoConnect> mapConnects = new Dictionary<String, ArduinoConnect>();
+		private static Dictionary<String, Process> mapConnects = new Dictionary<String, Process>();
 		private static Configs config;
         FileSystemWatcher watch;
 
@@ -199,10 +200,6 @@ namespace ArduinoKeyboard
             data["BOTOES"].AddKey("TEMPOS_REPETICAO", "10,25,2");
             parser.WriteFile(CNTL_PATH + g_strIniFileName, data);
         }
-		public static void RemoveCom(ArduinoConnect connect)
-		{
-			mapConnects.Remove(connect.ComPort);
-		}
 		/// <summary>
 		/// Método que monitora as portas e inicializa as conexões
 		/// </summary>
@@ -211,7 +208,7 @@ namespace ArduinoKeyboard
 			List<String> keys;
 			while (!this.stop)
 			{
-				ArduinoConnect arduinoConnect;
+                Process arduinoConnect;
 				bool hasConnected = false;
 
 				List<String> portNames = SerialPort.GetPortNames().ToList<String>();
@@ -223,10 +220,11 @@ namespace ArduinoKeyboard
 					{
                         Log("Main", "Porta " + key + " Desconectada");
 
-                        mapConnects[key].Stop();
+                        mapConnects[key].CloseMainWindow();
+                        mapConnects[key].Close();
 						mapConnects.Remove(key);
 					}
-					else if (mapConnects[key].IsConnected())
+					else if (mapConnects[key].Threads.Count > 0)
 					{
 						hasConnected = true;
 					}
@@ -240,11 +238,12 @@ namespace ArduinoKeyboard
 						{
 
                             Log("Main", "Vai criar conexão para a porta " + portName);
-							arduinoConnect = new ArduinoConnect(config, portName);
-							mapConnects.Add(portName, arduinoConnect);
-
-							Thread thread = new System.Threading.Thread(new ThreadStart(arduinoConnect.ReadFromPort));
-							thread.Start();
+                            
+                            ProcessStartInfo startInfo = new ProcessStartInfo(DEFAULT_PATH + "ArduinoConnect.exe");
+                            startInfo.Arguments = portName;
+                            startInfo.UseShellExecute = false;
+                            arduinoConnect = System.Diagnostics.Process.Start(startInfo);
+                            mapConnects.Add(portName, arduinoConnect);
 						}
 					}
 				}
