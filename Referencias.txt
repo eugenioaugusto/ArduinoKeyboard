@@ -16,3 +16,4 @@ https://social.msdn.microsoft.com/Forums/windowsdesktop/en-US/674b4951-1c6e-400a
 https://www.isumsoft.com/it/5-ways-to-open-local-security-policy-in-windows-10/
 abrir politicas de segurança pelo secpol.msc
 
+https://stackoverflow.com/questions/324539/how-can-i-run-a-program-from-a-batch-file-without-leaving-the-console-open-after
