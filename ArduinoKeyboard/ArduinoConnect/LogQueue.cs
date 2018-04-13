@@ -53,10 +53,10 @@ namespace ArduinoKeyboard
 					file_log.Flush();
 				}
 				
-				if (ArduinoKeyboardService.G_ShutdownEvent.WaitOne(delay_hig, true))
-				{
-					this.bStop = true;
-				}
+				//if (ArduinoKeyboardService.G_ShutdownEvent.WaitOne(delay_hig, true))
+				//{
+				//	this.bStop = true;
+				//}
 			}
 		}
 		public void Stop()

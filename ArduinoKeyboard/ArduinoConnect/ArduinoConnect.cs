@@ -214,7 +214,7 @@ namespace ArduinoKeyboard
                 var serialPort = (SerialPort)sender;
                 // Read the data that's in the serial buffer.
                 String serialdata = serialPort.ReadExisting().ToString();
-                this.LogDataReceived(String.Format("Recebeu [{0}]", serialdata));
+                this.LogDataReceived(String.Format("Recebeu [{0}]", serialdata.Replace('\n', ' ')));
                 if (serialdata.Contains("pong"))
                 {
                     this.receivedData = true;
@@ -225,7 +225,12 @@ namespace ArduinoKeyboard
                     this.receivedData = ReadButtons(serialdata);
                     if (this.receivedData)
                     {
+                        this.LogDataReceived("Recebeu dados ok, vai precionar teclas");
                         this.PressKeys();
+                    }
+                    else
+                    {
+                        this.LogDataReceived("Erro ao validar teclas");
                     }
                 }
             }catch(Exception ex )
@@ -250,7 +255,11 @@ namespace ArduinoKeyboard
 		}
 		private void LogSevere(String log)
 		{
-			ArduinoKeyboardService.Log(this.ComPort, log);
-		}
+            Console.WriteLine(log);
+            TagLogData data = new TagLogData();
+            data.Text_data = String.Format("ComPort {0}: {1}", this.comPort, log);
+            data.DtCurrTime = DateTime.Now;
+            LogQueue.QueueLogFile.Enqueue(data);
+        }
 	}
 }
