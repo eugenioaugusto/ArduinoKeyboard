@@ -15,7 +15,8 @@ namespace ArduinoKeyboard
 		bool running = true;
 		private bool receivedData = false;
 		private bool receivedPong = true;
-        private int retry = 0;
+		private bool logouArrayErrado = false;
+		private int retry = 0;
 		private Configs config;
 
 		public string ComPort { get => this.comPort; set => this.comPort = value; }
@@ -27,105 +28,123 @@ namespace ArduinoKeyboard
 			this.stopEvent = new AutoResetEvent(false);
 			this.keyArray = new Int32[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			this.keyCodeArray = new TipoBotao[] {
-                TipoBotao.btn_1,
-                TipoBotao.btn_2,
-                TipoBotao.btn_3,
-                TipoBotao.btn_4,
-                TipoBotao.btn_5,
-                TipoBotao.btn_6,
-                TipoBotao.btn_7,
-                TipoBotao.btn_8,
-                TipoBotao.btn_9,
-                TipoBotao.btn_10
-            };
+				TipoBotao.btn_1,
+				TipoBotao.btn_2,
+				TipoBotao.btn_3,
+				TipoBotao.btn_4,
+				TipoBotao.btn_5,
+				TipoBotao.btn_6,
+				TipoBotao.btn_7,
+				TipoBotao.btn_8,
+				TipoBotao.btn_9,
+				TipoBotao.btn_10
+			};
 		}
 		public void ReadFromPort()
 		{
-			//Inicializa a porta usando o com que recebeu no construtor
-			this.serialPort = new SerialPort(this.ComPort)
+			try
 			{
-				BaudRate = 9600,
-				Parity = Parity.None,
-				StopBits = StopBits.One,
-				DataBits = 8,
-				Handshake = Handshake.None
-			};
-
-			// Subscribe to the DataReceived event.
-			this.serialPort.DataReceived += this.SerialPortDataReceived;
-			do
-			{
-				//dorme indefinido caso esteja conectado pois só recebe dado quando um botão é apertado
-				int sleepTime = -1;
-				try
+				if (this.keyCodeArray.Length != this.config.IsRepeat.Length)
 				{
-					if (!this.serialPort.IsOpen)
-					{
-						// Abre a porta
-						this.serialPort.Open();
-						this.LogInfo("Abriu a porta ");
-						//envia ping para confirmar que está conectado ao arduino
-						this.LogInfo("Vai enviar Ping");
-						this.receivedPong = false;
-						this.serialPort.WriteLine("ping");
-						this.LogInfo("Ping enviado");
-						sleepTime = 3000;
-					}
+					LogSevere(String.Format("Array de teclas com tamanho [{0}] diferente do Array de repetições[{1}]", this.keyArray, this.config.IsRepeat));
 				}
-				catch (Exception ex)
+				//Inicializa a porta usando o com que recebeu no construtor
+				this.serialPort = new SerialPort(this.ComPort)
 				{
-					if (ex.Message.Contains("does not exist."))
+					BaudRate = 9600,
+					Parity = Parity.None,
+					StopBits = StopBits.One,
+					DataBits = 8,
+					Handshake = Handshake.None
+				};
+
+				// Subscribe to the DataReceived event.
+				this.serialPort.DataReceived += this.SerialPortDataReceived;
+				do
+				{
+					//dorme indefinido caso esteja conectado pois só recebe dado quando um botão é apertado
+					int sleepTime = -1;
+					try
 					{
-						sleepTime = this.config.SleepNotExist;
-						if (this.config.SleepNotExist < 0)
+						if (!this.serialPort.IsOpen)
 						{
-							this.LogInfo("Saindo pois a porta não existe");
-							this.ClosePort();
-							return;
+							// Abre a porta
+							this.serialPort.Open();
+							this.LogInfo("Abriu a porta ");
+							//envia ping para confirmar que está conectado ao arduino
+							this.LogInfo("Vai enviar Ping");
+							this.receivedPong = false;
+							this.serialPort.WriteLine("ping");
+							this.LogInfo("Ping enviado");
+							sleepTime = 3000;
 						}
+					}
+					catch (Exception ex)
+					{
+						if (ex.Message.Contains("does not exist."))
+						{
+							sleepTime = this.config.SleepNotExist;
+							if (this.config.SleepNotExist < 0)
+							{
+								this.LogInfo("Saindo pois a porta não existe");
+								this.ClosePort();
+								return;
+							}
+						}
+						else
+						{
+							this.LogException(ex, "No while principal da ReadFromPort");
+						}
+					}
+					if (sleepTime < 0)
+					{
+						this.LogInfo("Vai dormir até receber comando de parada");
 					}
 					else
 					{
-						this.LogSevere(ex.Message);
+						this.LogInfo(String.Format("Vai dormir por {0} segundos", sleepTime / 1000));
 					}
-				}
-				if (sleepTime < 0)
-				{
-					this.LogInfo("Vai dormir até receber comando de parada");
-				}
-				else
-				{
-					this.LogInfo(String.Format("Vai dormir por {0} segundos", sleepTime/1000));
-				}
-				if(!this.stopEvent.WaitOne(sleepTime))
-				{
-					this.LogInfo("Acordou");
-					if ( !this.receivedPong )
+					if (!this.stopEvent.WaitOne(sleepTime))
 					{
-                        if (this.receivedData)
-                        {
-                            this.LogSevere("Não recebeu pong mas recebeu dados corretos.");
-                        }
-                        else
-                        {
-                            this.LogSevere(String.Format("Não recebeu Pong depois de {0}s.", sleepTime / 1000));
-                            if (this.retry < 3)
-                            {
-                                this.retry++;
-                                this.serialPort.WriteLine("ping");
-                                this.LogInfo(String.Format("Ping enviado [{0}]", this.retry));
-                            }
-                            else
-                            {
-                                this.LogSevere("Saindo pois não é a porta correta");
-                                this.running = false;
-                            }
-                        }
+						this.LogInfo("Acordou");
+						if (!this.receivedPong)
+						{
+							if (this.receivedData)
+							{
+								this.LogInfo("Não recebeu pong mas recebeu dados corretos.");
+							}
+							else
+							{
+								this.LogSevere(String.Format("Não recebeu Pong depois de {0}s.", sleepTime / 1000));
+								if (this.retry < 3)
+								{
+									this.retry++;
+									this.serialPort.WriteLine("ping");
+									this.LogInfo(String.Format("Ping enviado [{0}]", this.retry));
+								}
+								else
+								{
+									this.LogSevere("Saindo pois não é a porta correta");
+									this.running = false;
+								}
+							}
+						}
 					}
+				} while (this.running);
+				this.LogSevere("Saindo");
+				this.ClosePort();
+			}
+			catch (Exception ex)
+			{
+				this.LogException(ex, "No método ReadFromPort");
+			}
+			finally
+			{
+				if (this.serialPort != null && this.serialPort.IsOpen)
+				{
+					this.serialPort.Close();
 				}
-			} while (this.running);
-			this.LogInfo("Saindo");
-			this.ClosePort();
+			}
 		}
 		public void ClosePort()
 		{
@@ -133,7 +152,7 @@ namespace ArduinoKeyboard
 		}
 		public void Stop()
 		{
-			this.LogInfo("Recebeu comando stop");
+			this.LogSevere("Recebeu comando stop");
 			this.running = false;
 			this.stopEvent.Set();
 		}
@@ -150,7 +169,8 @@ namespace ArduinoKeyboard
 				{
 					if (keyvalue == 1)
 					{
-                        ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
+						ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
+						this.LogDataReceived(String.Format("Pressionando botão {0}", this.keyCodeArray[i]));
 					}
 					else if (this.config.IsRepeat[i])
 					{
@@ -163,21 +183,22 @@ namespace ArduinoKeyboard
 							if (keyvalue == repeatValue ||
 								keyvalue % repeatValue == 0)
 							{
-                                ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
-                            }
+								ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
+								this.LogDataReceived(String.Format("Pressionando botão {0}", this.keyCodeArray[i]));
+							}
 						}
 					}
 				}
 			}
-            Thread.Sleep(20);
-            for (int i = 0; i < this.keyArray.Length; i++)
-            {
-                Int32 keyvalue = this.keyArray[i];
-                if (this.config.IsRepeat[i] || keyvalue == 0)
-                {
-                    ArduinoKeyboardService.releaseButton(this.keyCodeArray[i], this.comPort);
-                }
-            }
+			Thread.Sleep(20);
+			for (int i = 0; i < this.keyArray.Length; i++)
+			{
+				Int32 keyvalue = this.keyArray[i];
+				if (this.config.IsRepeat[i] || keyvalue == 0)
+				{
+					ArduinoKeyboardService.releaseButton(this.keyCodeArray[i], this.comPort);
+				}
+			}
 		}
 		private bool ReadButtons(String data)
 		{
@@ -213,29 +234,34 @@ namespace ArduinoKeyboard
 		}
 		private void SerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
 		{
-            try
-            {
-                var serialPort = (SerialPort)sender;
-                // Read the data that's in the serial buffer.
-                String serialdata = serialPort.ReadExisting().ToString();
-                this.LogDataReceived(String.Format("Recebeu [{0}]", serialdata));
-                if (serialdata.Contains("pong"))
-                {
-                    this.receivedData = true;
-                    this.receivedPong = true;
-                }
-                else
-                {
-                    this.receivedData = ReadButtons(serialdata);
-                    if (this.receivedData)
-                    {
-                        this.PressKeys();
-                    }
-                }
-            }catch(Exception ex )
-            {
-                LogSevere(ex.Message);
-            }
+			try
+			{
+				var serialPort = (SerialPort)sender;
+				// Read the data that's in the serial buffer.
+				String serialdata = serialPort.ReadExisting().ToString();
+				this.LogDataReceived(String.Format("Recebeu [{0}]", serialdata.Replace('\n', ' ')));
+				if (serialdata.Contains("pong"))
+				{
+					this.receivedData = true;
+					this.receivedPong = true;
+				}
+				else
+				{
+					this.receivedData = ReadButtons(serialdata);
+					if (this.receivedData)
+					{
+						if (!this.logouArrayErrado && this.keyCodeArray.Length != this.keyArray.Length)
+						{
+							LogSevere(String.Format("Array de teclas com tamanho [{0}] diferente do Array recebido[{1}]", this.keyArray, this.keyArray.Length));
+						}
+						this.PressKeys();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				LogSevere(ex.Message);
+			}
 		}
 
 		private void LogInfo(String log)
@@ -247,7 +273,7 @@ namespace ArduinoKeyboard
 		}
 		private void LogDataReceived(String log)
 		{
-			if( this.config.LogDataReceived )
+			if (this.config.LogDataReceived)
 			{
 				this.LogSevere(log);
 			}
@@ -255,6 +281,10 @@ namespace ArduinoKeyboard
 		private void LogSevere(String log)
 		{
 			ArduinoKeyboardService.Log(this.ComPort, log);
+		}
+		private void LogException(Exception ex, String msg)
+		{
+			ArduinoKeyboardService.Log(this.ComPort, String.Format("Exception capturada. {0}\nMensagem:{1}\nStack:{2}", msg, ex.Message, ex.StackTrace));
 		}
 	}
 }
