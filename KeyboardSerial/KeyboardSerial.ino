@@ -48,9 +48,6 @@ void loop() {
     envio += digiRead;
     isZero = isZero && digiRead == 0;
   }
-  digiRead = digitalRead(2);
-  envio += digiRead;
-  isZero = isZero && digiRead == 0;
   envio += "$";
   if( !isZero || !lastIsZero )
   {

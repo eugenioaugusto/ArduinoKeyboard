@@ -1,8 +1,6 @@
 using System;
 using System.IO.Ports;
 using System.Threading;
-using WindowsInput;
-using WindowsInput.Native;
 
 namespace ArduinoKeyboard
 {
@@ -10,9 +8,8 @@ namespace ArduinoKeyboard
 	{
 		private SerialPort serialPort;
 		private const Int32 MINUTE = 1 * 1000; // * 60;
-		private InputSimulator inputSim;
 		private Int32[] keyArray;
-		private VirtualKeyCode[] keyCodeArray;
+		private TipoBotao[] keyCodeArray;
 		private String comPort;
 		AutoResetEvent stopEvent;
 		bool running = true;
@@ -27,22 +24,20 @@ namespace ArduinoKeyboard
 		{
 			this.config = config;
 			this.ComPort = comPort;
-			this.inputSim = new InputSimulator();
 			this.stopEvent = new AutoResetEvent(false);
 			this.keyArray = new Int32[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-			this.keyCodeArray = new VirtualKeyCode[] {
-				VirtualKeyCode.VK_1,
-				VirtualKeyCode.VK_2,
-				VirtualKeyCode.VK_3,
-				VirtualKeyCode.VK_4,
-				VirtualKeyCode.VK_5,
-				VirtualKeyCode.VK_6,
-				VirtualKeyCode.VK_7,
-				VirtualKeyCode.VK_8,
-				VirtualKeyCode.VK_9,
-				VirtualKeyCode.VK_A,
-				VirtualKeyCode.VK_B
-			};
+			this.keyCodeArray = new TipoBotao[] {
+                TipoBotao.btn_1,
+                TipoBotao.btn_2,
+                TipoBotao.btn_3,
+                TipoBotao.btn_4,
+                TipoBotao.btn_5,
+                TipoBotao.btn_6,
+                TipoBotao.btn_7,
+                TipoBotao.btn_8,
+                TipoBotao.btn_9,
+                TipoBotao.btn_10
+            };
 		}
 		public void ReadFromPort()
 		{
@@ -155,7 +150,7 @@ namespace ArduinoKeyboard
 				{
 					if (keyvalue == 1)
 					{
-						this.inputSim.Keyboard.KeyPress(this.keyCodeArray[i]);
+                        ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
 					}
 					else if (this.config.IsRepeat[i])
 					{
@@ -168,12 +163,21 @@ namespace ArduinoKeyboard
 							if (keyvalue == repeatValue ||
 								keyvalue % repeatValue == 0)
 							{
-								this.inputSim.Keyboard.KeyPress(this.keyCodeArray[i]);
-							}
+                                ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
+                            }
 						}
 					}
 				}
 			}
+            Thread.Sleep(20);
+            for (int i = 0; i < this.keyArray.Length; i++)
+            {
+                Int32 keyvalue = this.keyArray[i];
+                if (this.config.IsRepeat[i] || keyvalue == 0)
+                {
+                    ArduinoKeyboardService.releaseButton(this.keyCodeArray[i], this.comPort);
+                }
+            }
 		}
 		private bool ReadButtons(String data)
 		{
