@@ -26,7 +26,6 @@ namespace ArduinoKeyboard
 			this.config = config;
 			this.ComPort = comPort;
 			this.stopEvent = new AutoResetEvent(false);
-			this.keyArray = new Int32[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			this.keyCodeArray = new TipoBotao[] {
 				TipoBotao.btn_1,
 				TipoBotao.btn_2,
@@ -39,6 +38,7 @@ namespace ArduinoKeyboard
 				TipoBotao.btn_9,
 				TipoBotao.btn_10
 			};
+            this.keyArray = new Int32[keyCodeArray.Length];
 		}
 		public void ReadFromPort()
 		{
@@ -46,7 +46,7 @@ namespace ArduinoKeyboard
 			{
 				if (this.keyCodeArray.Length != this.config.IsRepeat.Length)
 				{
-					LogSevere(String.Format("Array de teclas com tamanho [{0}] diferente do Array de repetições[{1}]", this.keyArray, this.config.IsRepeat));
+					LogSevere(String.Format("Array de teclas com tamanho [{0}] diferente do Array de repetições[{1}]", this.keyCodeArray.Length, this.config.IsRepeat.Length));
 				}
 				//Inicializa a porta usando o com que recebeu no construtor
 				this.serialPort = new SerialPort(this.ComPort)
@@ -162,6 +162,7 @@ namespace ArduinoKeyboard
 		}
 		private void PressKeys()
 		{
+            bool pressionou = false;
 			for (int i = 0; i < this.keyArray.Length; i++)
 			{
 				Int32 keyvalue = this.keyArray[i];
@@ -169,8 +170,8 @@ namespace ArduinoKeyboard
 				{
 					if (keyvalue == 1)
 					{
-						ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
-						this.LogDataReceived(String.Format("Pressionando botão {0}", this.keyCodeArray[i]));
+                        pressionou = ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
+						this.LogDataReceived(String.Format("Pressionando com {1} o botão {0}", this.keyCodeArray[i], pressionou?"Sucesso":"Falha"));
 					}
 					else if (this.config.IsRepeat[i])
 					{
@@ -183,8 +184,8 @@ namespace ArduinoKeyboard
 							if (keyvalue == repeatValue ||
 								keyvalue % repeatValue == 0)
 							{
-								ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
-								this.LogDataReceived(String.Format("Pressionando botão {0}", this.keyCodeArray[i]));
+                                pressionou = ArduinoKeyboardService.pressButton(this.keyCodeArray[i], this.comPort);
+								this.LogDataReceived(String.Format("Pressionando botão {0}", this.keyCodeArray[i], pressionou ? "Sucesso" : "Falha"));
 							}
 						}
 					}
@@ -208,6 +209,7 @@ namespace ArduinoKeyboard
 			}
 			if (data.Length < this.keyArray.Length)
 			{
+                this.LogSevere(String.Format("Recebeu menos dados[{0}] do que o minimo [{1}]", data.Length, this.keyArray.Length));
 				return false;
 			}
 			for (int i = 1; i < data.Length; i++)
@@ -252,7 +254,7 @@ namespace ArduinoKeyboard
 					{
 						if (!this.logouArrayErrado && this.keyCodeArray.Length != this.keyArray.Length)
 						{
-							LogSevere(String.Format("Array de teclas com tamanho [{0}] diferente do Array recebido[{1}]", this.keyArray, this.keyArray.Length));
+							LogSevere(String.Format("Array de teclas com tamanho [{0}] diferente do Array recebido[{1}]", this.keyCodeArray.Length, this.keyArray.Length));
 						}
 						this.PressKeys();
 					}
@@ -261,6 +263,7 @@ namespace ArduinoKeyboard
 			catch (Exception ex)
 			{
 				LogSevere(ex.Message);
+                this.Stop();
 			}
 		}
 
