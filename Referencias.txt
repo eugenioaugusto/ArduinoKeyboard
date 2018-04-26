@@ -17,3 +17,7 @@ https://www.isumsoft.com/it/5-ways-to-open-local-security-policy-in-windows-10/
 abrir politicas de segurança pelo secpol.msc
 
 https://stackoverflow.com/questions/324539/how-can-i-run-a-program-from-a-batch-file-without-leaving-the-console-open-after
+
+arduino micro como joystick
+
+https://www.instructables.com/id/DIY-Wireless-Joystick-Wireless-Gaming/
