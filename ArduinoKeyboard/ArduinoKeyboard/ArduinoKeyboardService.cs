@@ -87,10 +87,15 @@ namespace ArduinoKeyboard
         }
         public static void Log(String comInfo, String log)
         {
-            TagLogData data = new TagLogData();
-            data.Text_data = String.Format("ComPort {0}: {1}", comInfo, log);
-            data.DtCurrTime = DateTime.Now;
-            LogQueue.QueueLogFile.Enqueue(data);
+            String msgFormatada = String.Format("ComPort {0}: {1}", comInfo, log);
+            if (LogQueue.running)
+            {
+                TagLogData data = new TagLogData();
+                data.Text_data = msgFormatada;
+                data.DtCurrTime = DateTime.Now;
+                LogQueue.QueueLogFile.Enqueue(data);
+            }
+            LogCritico(msgFormatada);
         }
         /// <summary>
         /// Método que inicializa as threads de leitura
@@ -122,9 +127,7 @@ namespace ArduinoKeyboard
                 if (!LeConfiguracao())
                 {
                     msg = "Falha não tratada ao ler arquivo de configuração.";
-                    StreamWriter file_log = new StreamWriter(new FileStream(LOG_CRITICAL_FILE_NAME, System.IO.FileMode.Append));
-                    file_log.WriteLine(msg);
-                    file_log.Close();
+                    LogCritico(msg);
                     base.Stop();
                     return;
                 }
@@ -133,13 +136,7 @@ namespace ArduinoKeyboard
             catch (Exception ex)
             {
                 msg = String.Format("Exceção capturada ao ler arquivo de configuração : {0}\nStack:{1}", ex.Message, ex.StackTrace);
-                if (!File.Exists(LOG_CRITICAL_FILE_NAME))
-                {
-                    File.Create(LOG_CRITICAL_FILE_NAME).Close();
-                }
-                StreamWriter file_log = new StreamWriter(new FileStream(LOG_CRITICAL_FILE_NAME, System.IO.FileMode.Append));
-                file_log.WriteLine("[Exception][le_configuracao()]Exceção ocorrida durante tentativa leitura de arquivo de configuração, causa : " + ex.ToString() + " - " + ex.StackTrace);
-                file_log.Close();
+                LogCritico(ExceptionToString(ex, "Exceção capturada ao ler arquivo de configuração"));
                 base.Stop();
                 return;
             }
@@ -166,13 +163,7 @@ namespace ArduinoKeyboard
             }
             catch (Exception ex)
             {
-                if (!File.Exists(LOG_CRITICAL_FILE_NAME))
-                {
-                    File.Create(LOG_CRITICAL_FILE_NAME).Close();
-                }
-                StreamWriter file_log = new StreamWriter(new FileStream(LOG_CRITICAL_FILE_NAME, System.IO.FileMode.Append));
-                file_log.WriteLine("[Exception][le_configuracao()]Exceção ocorrida durante a inicialização do joystick, causa : " + ex.ToString() + " - " + ex.StackTrace);
-                file_log.Close();
+                LogCritico(ExceptionToString(ex, "[le_configuracao()]Exceção ocorrida durante a inicialização do joystick,"));
                 base.Stop();
                 return;
             }
@@ -183,6 +174,7 @@ namespace ArduinoKeyboard
         }
         public static bool ResetJoystick()
         {
+            LogInfo("Tentando Reiniciar o Joystick");
             VjdStat status = joystick.GetVJDStatus(JOYSTICK_ID);
             // Acquire the target
             if ((status == VjdStat.VJD_STAT_OWN) || ((status == VjdStat.VJD_STAT_FREE) && (!joystick.AcquireVJD(JOYSTICK_ID))))
@@ -200,6 +192,7 @@ namespace ArduinoKeyboard
                 LogSevere("Falha no metodo ResetVJD");
                 return false;
             }
+            LogInfo("Reiniciado com sucesso");
             return true;
         }
         private static void OnIniChanged(object source, FileSystemEventArgs e)
@@ -218,18 +211,24 @@ namespace ArduinoKeyboard
                 }
                 catch (Exception ex)
                 {
-                    LogSevere(String.Format("Exceção ao ler arquivo de configuração : {0}\nStack:{1}", ex.Message, ex.StackTrace));
+                    LogSevere(ExceptionToString(ex,"Exceção ao ler arquivo de configuração :"));
                 }
                 fileSorce.EnableRaisingEvents = true;
             }
         }
         public static bool pressButton(TipoBotao tipoBotao, String comPort)
         {
-            return joystick.SetBtn(true, JOYSTICK_ID, (uint)tipoBotao);
+            LogInfo("Servico recebeu comando de pressionar botão");
+            bool retorno = joystick.SetBtn(true, JOYSTICK_ID, (uint)tipoBotao);
+            LogInfo("Botão acionado com " + (retorno ? "Sucesso" : "Falha"));
+            return retorno;
         }
         public static bool releaseButton(TipoBotao tipoBotao, String comPort)
         {
-            return joystick.SetBtn(false, JOYSTICK_ID, (uint)tipoBotao);
+            LogInfo("Servico recebeu comando de pressionar botão");
+            bool retorno = joystick.SetBtn(false, JOYSTICK_ID, (uint)tipoBotao);
+            LogInfo("Botão acionado com " + (retorno ? "Sucesso" : "Falha"));
+            return retorno;
         }
         private static bool LeConfiguracao()
         {
@@ -320,6 +319,7 @@ namespace ArduinoKeyboard
         /// </summary>
         public void Run()
         {
+            LogSevere("Serviço iniciando");
             List<String> keys;
             while (!this.stop)
             {
@@ -333,7 +333,13 @@ namespace ArduinoKeyboard
                     //usa assim para poder remover
                     foreach (String key in keys)
                     {
-                        if (!portNames.Contains(key))
+                        if( mapConnects[key] == null )
+                        {
+                            LogInfo(String.Format("Encontrou a porta {0} null, removendo.", key));
+                            mapConnects.Remove(key);
+                            continue;
+                        }
+                        if (!portNames.Contains(key) && mapConnects[key] != null)
                         {
                             LogSevere("Porta " + key + " Desconectada");
 
@@ -359,6 +365,7 @@ namespace ArduinoKeyboard
 
                                 Thread thread = new System.Threading.Thread(new ThreadStart(arduinoConnect.ReadFromPort));
                                 thread.Start();
+                                LogSevere("Conexão criada para a porta " + portName);
                             }
                         }
                     }
@@ -367,12 +374,30 @@ namespace ArduinoKeyboard
                         LogSevere("Recebeu comando de parada");
                         this.stop = true;
                     }
+                    
                 }
                 catch (Exception ex)
                 {
-                    LogSevere(String.Format("Exception capturada no método RUN: Mensagem: [{0}]\nStack:{1}", ex.Message, ex.StackTrace));
+                    LogCritico(String.Format("Exception capturada no método RUN: Mensagem: [{0}]\nStack:{1}", ex.Message, ex.StackTrace));
                 }
             }
+            LogSevere("Serviço saindo");
+            ArduinoKeyboardService.G_ShutdownEvent.Set();
+        }
+
+        public static void LogCritico(String msg)
+        {
+            if (!File.Exists(LOG_CRITICAL_FILE_NAME))
+            {
+                File.Create(LOG_CRITICAL_FILE_NAME).Close();
+            }
+            StreamWriter file_log = new StreamWriter(new FileStream(LOG_CRITICAL_FILE_NAME, System.IO.FileMode.Append));
+            file_log.WriteLine(msg);
+            file_log.Close();
+        }
+        public static string ExceptionToString(Exception ex, String msgAdicional = "")
+        {
+            return String.Format("[Exception] {0} Message:{1}\nStack:{2}", msgAdicional, ex.Message, ex.StackTrace);
         }
     }
 }

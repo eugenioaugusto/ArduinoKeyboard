@@ -104,8 +104,12 @@ namespace ArduinoKeyboard
 					{
 						this.LogInfo(String.Format("Vai dormir por {0} segundos", sleepTime / 1000));
 					}
-					if (!this.stopEvent.WaitOne(sleepTime))
-					{
+                    if(ArduinoKeyboardService.G_ShutdownEvent.WaitOne(sleepTime, true))
+                    {
+                        this.Stop();
+                    }
+                    else
+                    { 
 						this.LogInfo("Acordou");
 						if (!this.receivedPong)
 						{
@@ -144,6 +148,7 @@ namespace ArduinoKeyboard
 				{
 					this.serialPort.Close();
 				}
+				this.LogSevere("Saindo");
 			}
 		}
 		public void ClosePort()
